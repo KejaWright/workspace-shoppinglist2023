@@ -37,21 +37,45 @@
   <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyAzcwgZuLA7dO9g4sQhXQVTUgCo0M8m2qM",
-      authDomain: "grocerylist-91956.firebaseapp.com",
-      databaseURL: "https://grocerylist-91956.firebaseio.com",
-      projectId: "grocerylist-91956",
-      storageBucket: "grocerylist-91956.appspot.com",
-      messagingSenderId: "813812426276",
-      appId: "1:813812426276:web:93e5897af12892ff78dab1",
-      measurementId: "G-VZ83BTR72T"
-    }; 
+      apiKey: "AIzaSyDyMOT09OBbSnVAsLD6126pehU-Rb9CSwo",
+      authDomain: "database2023-2d1eb.firebaseapp.com",
+      projectId: "database2023-2d1eb",
+      storageBucket: "database2023-2d1eb.appspot.com",
+      messagingSenderId: "926820854611",
+      appId: "1:926820854611:web:d00901a2a6e8a1edd44fa6",
+      measurementId: "G-KXBC68VCDR"
+    };
     // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
-    // Save the list to database
 
+    //read data from the database and update the list
+    $('li').remove();
+
+    db.collection("shoppinglist").get().then((querySnapshot) =>{
+      console.log(querySnapshot);
+      querySnapshot.forEach((doc) => {
+        var item = doc.data().item;
+        console.log("loading...", item);
+      });
+      //update list
+      $("#todo").append("<li>" + item + "</li>");
+      //make clickable
+      $("#todo").click();
+    })
+
+    // Save the list to database
+    $("#save").click(function(){
+      //tesing database
+      $('li').each(function(){
+        var value = $(this).text();
+        console.log("saving ", value);
+        db.collection("shoppinglist").add({
+          item: value
+        });
+      });
+    })
 
   </script>
 
